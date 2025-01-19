@@ -11,18 +11,19 @@ class SearchTabViewController: CustomBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func configureNavigationItem() {
+        self.navigationItem.title = "SEARCH PHOTO"
+        let sc: UISearchController = UISearchController()
+        sc.hidesNavigationBarDuringPresentation = false
+        sc.searchBar.placeholder = "키워드 검색"
+        sc.automaticallyShowsCancelButton = false
+        sc.searchBar.tintColor = UIColor.black
+        self.navigationItem.searchController = sc
+        
+        // TODO: UISearchController 인스턴스를 self.navigationItem.searchController에 할당하고 나서 텍스트 컬러를 할당해줘야 색이 적용됨...? 왜...?
+        sc.searchBar.searchTextField.textColor = UIColor.black
     }
-    */
-
 }
