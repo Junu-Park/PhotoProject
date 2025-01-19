@@ -19,6 +19,7 @@ class TabBarController: UITabBarController {
         tab2.tabBarItem = TabBarEnum.ShortFormTab.tabBarItem
         
         let tab3Navi: UINavigationController = UINavigationController(rootViewController: SearchTabViewController())
+        tab3Navi.navigationBar.tintColor = UIColor.black
         let naviBarAppearance: UINavigationBarAppearance = UINavigationBarAppearance()
         naviBarAppearance.backgroundColor = UIColor.white
         tab3Navi.navigationBar.scrollEdgeAppearance = naviBarAppearance

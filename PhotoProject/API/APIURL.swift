@@ -9,4 +9,5 @@ import Foundation
 
 enum APIURL: String {
     case photoSearch = "https://api.unsplash.com/search/photos?"
+    case photoStatistics = "https://api.unsplash.com/photos/"
 }

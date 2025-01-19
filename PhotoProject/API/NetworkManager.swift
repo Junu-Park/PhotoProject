@@ -27,4 +27,18 @@ class NetworkManager {
             }
         }
     }
+    
+    func requestPhotoStatistics(params: PhotoStatisticsRequest, completionHander: @escaping (PhotoStatisticsResponse) -> ()) {
+        
+        let header = HTTPHeader.init(name: "Authorization", value: "Client-ID \(APIKey.unsplashAccessKy.rawValue)")
+        
+        AF.request("\(APIURL.photoStatistics.rawValue)\(params.id)/statistics?", headers: [header]).responseDecodable(of: PhotoStatisticsResponse.self) { response in
+            switch response.result {
+            case .success(let data):
+                completionHander(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

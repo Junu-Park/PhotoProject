@@ -42,6 +42,7 @@ class SearchTabViewController: CustomBaseViewController {
     }
     
     override func configureNavigationItem() {
+        self.navigationItem.backButtonDisplayMode = .minimal
         self.navigationItem.title = "SEARCH PHOTO"
         let sc: UISearchController = UISearchController()
         sc.hidesNavigationBarDuringPresentation = false
@@ -168,6 +169,14 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             return cell
         default:
             return UICollectionViewCell()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PhotoDetailViewController()
+        vc.photoSearchData = photoSearchResult[indexPath.item]
+        networkManager.requestPhotoStatistics(params: PhotoStatisticsRequest(id: photoSearchResult[indexPath.item].id)) { result in
+            vc.photoStatisticsData = result
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
