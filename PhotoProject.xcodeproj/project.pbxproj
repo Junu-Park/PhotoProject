@@ -10,10 +10,12 @@
 		51CC5FB82D3CF52500F4BFCB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 51CC5FB72D3CF52500F4BFCB /* SnapKit */; };
 		51CC60772D3D432E00F4BFCB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 51CC60762D3D432E00F4BFCB /* Kingfisher */; };
 		51CC60A62D3D436E00F4BFCB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 51CC60A52D3D436E00F4BFCB /* Alamofire */; };
+		51CC615B2D3D6F6900F4BFCB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 51CC615A2D3D6F6900F4BFCB /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		51119CB52D3BF2D500ECCD64 /* PhotoProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		51CC615A2D3D6F6900F4BFCB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -54,6 +56,7 @@
 		51119CAC2D3BF2D500ECCD64 = {
 			isa = PBXGroup;
 			children = (
+				51CC615A2D3D6F6900F4BFCB /* .gitignore */,
 				51119CB72D3BF2D500ECCD64 /* PhotoProject */,
 				51119CB62D3BF2D500ECCD64 /* Products */,
 			);
@@ -139,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51CC615B2D3D6F6900F4BFCB /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
