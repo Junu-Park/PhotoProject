@@ -7,14 +7,14 @@
 
 import UIKit
 
-enum SortEnum {
-    case related
-    case Newest
+enum SortEnum: String {
+    case relevant = "relevant"
+    case latest = "latest"
 }
 
 class SortButton: UIButton {
     
-    var sortType: SortEnum = .related {
+    var sortType: SortEnum = .relevant {
         willSet(newVal) {
             setTitleWithSortType(newVal)
         }
@@ -40,9 +40,9 @@ class SortButton: UIButton {
     
     func setTitleWithSortType(_ SortType: SortEnum){
         switch SortType {
-        case .related:
+        case .relevant:
             self.setTitle("관련순", for: .normal)
-        case .Newest:
+        case .latest:
             self.setTitle("최신순", for: .normal)
         }
     }

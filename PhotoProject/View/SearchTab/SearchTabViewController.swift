@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 
 class SearchTabViewController: CustomBaseViewController {
@@ -17,9 +18,26 @@ class SearchTabViewController: CustomBaseViewController {
     
     lazy var photoCV: PhotoCollectionView = PhotoCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height / 1.5))
     
+    let networkManager: NetworkManager = NetworkManager.shared
+
+    var photoSearchRequest: PhotoSearchRequest = PhotoSearchRequest(query: "", page: 1, color: "")
+    
+    var photoSearchResult: [PhotoSearchResult] = [] {
+        willSet(oldVal) {
+            if oldVal.count == 0 {
+                photoCV.label.text = "검색 결과가 없습니다."
+            } else {
+                photoCV.label.text = ""
+            }
+            photoCV.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        connectSearchTextField()
         connectCollectionView()
     }
     
@@ -61,6 +79,50 @@ class SearchTabViewController: CustomBaseViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    
+    @objc func sortButtonTapped() {
+        switch sortButton.sortType {
+        case .relevant:
+            sortButton.sortType = .latest
+        case .latest:
+            sortButton.sortType = .relevant
+        }
+        photoSearchRequest.page = 1
+        photoSearchRequest.order_by = sortButton.sortType.rawValue
+        if let text = self.navigationItem.searchController!.searchBar.searchTextField.text, !text.isEmpty {
+            self.photoCV.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+            networkManager.requestPhotoSearch(params: photoSearchRequest) { result in
+                self.photoSearchResult = result
+            }
+        }
+    }
+}
+
+extension SearchTabViewController: UISearchTextFieldDelegate {
+    
+    func connectSearchTextField() {
+        self.navigationItem.searchController!.searchBar.searchTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text, !text.isEmpty {
+            photoSearchRequest.page = 1
+            photoSearchRequest.query =  text
+            if photoSearchResult.count > 0 {
+                self.photoCV.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+            }
+            networkManager.requestPhotoSearch(params: photoSearchRequest) { result in
+                self.photoSearchResult = result
+            }
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        photoSearchRequest.query = textField.text ?? ""
+    }
 }
 
 extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -79,7 +141,7 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
         case 1:
             return 10
         case 2:
-            return 10
+            return photoSearchResult.count
         default:
             return 0
         }
@@ -95,7 +157,14 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.id, for: indexPath) as! PhotoCollectionViewCell
-            cell.backgroundColor = .red
+            cell.imageView.kf.setImage(with: URL(string: photoSearchResult[indexPath.item].urls.small))
+            cell.likeCountButton.setTitle("\(photoSearchResult[indexPath.item].likes.formatted())", for: .normal)
+            if (indexPath.item + 2) == photoSearchResult.count {
+                photoSearchRequest.page += 1
+                networkManager.requestPhotoSearch(params: photoSearchRequest) { result in
+                    self.photoSearchResult += result
+                }
+            }
             return cell
         default:
             return UICollectionViewCell()
