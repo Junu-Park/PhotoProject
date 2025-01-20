@@ -7,6 +7,47 @@
 
 import UIKit
 
+import SnapKit
+
 class TopicCollectionViewCell: UICollectionViewCell {
+    static let id = "TopicCollectionViewCell"
     
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        return iv
+    }()
+    
+    let likeButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.backgroundColor = UIColor.darkGray
+        btn.setTitleColor(.white, for: .normal)
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.tintColor = .yellow
+        return btn
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        contentView.addSubview(imageView)
+        contentView.addSubview(likeButton)
+        
+        contentView.layer.cornerRadius = 15
+        contentView.clipsToBounds = true
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        likeButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(8)
+            make.bottom.equalToSuperview().offset(-8)
+        }
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
