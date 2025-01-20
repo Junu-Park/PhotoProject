@@ -21,7 +21,10 @@ class TopicTabViewController: CustomBaseViewController {
         return lb
     }()
     
-    let goldenHourScrollView: UIScrollView = UIScrollView()
+    lazy var goldenHourCollectionView: TopicCollectionView = {
+        let cv = TopicCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200))
+        return cv
+    }()
     
     let businessLabel: UILabel = {
         let lb: UILabel = UILabel()
@@ -31,7 +34,10 @@ class TopicTabViewController: CustomBaseViewController {
         return lb
     }()
     
-    let businessScrollView: UIScrollView = UIScrollView()
+    lazy var businessCollectionView: TopicCollectionView = {
+        let cv = TopicCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200))
+        return cv
+    }()
     
     let architectureLabel: UILabel = {
         let lb: UILabel = UILabel()
@@ -41,17 +47,14 @@ class TopicTabViewController: CustomBaseViewController {
         return lb
     }()
     
-    let architectureScrollView: UIScrollView = UIScrollView()
-    
-    let imageView: UIImageView = {
-        let iv: UIImageView = UIImageView()
-        iv.contentMode = .scaleToFill
-        return iv
+    lazy var architectureCollectionView: TopicCollectionView = {
+        let cv = TopicCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200))
+        return cv
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        connectCollectionView()
     }
     
     override func configureNavigationItem() {
@@ -60,60 +63,84 @@ class TopicTabViewController: CustomBaseViewController {
     
     override func configureHierarchy() {
         view.addSubview(mainScrollView)
-        
         mainScrollView.addSubview(goldenHourLabel)
-        mainScrollView.addSubview(goldenHourScrollView)
-        goldenHourScrollView.addSubview(imageView)
-        
+        mainScrollView.addSubview(goldenHourCollectionView)
         mainScrollView.addSubview(businessLabel)
-        mainScrollView.addSubview(businessScrollView)
-        
+        mainScrollView.addSubview(businessCollectionView)
         mainScrollView.addSubview(architectureLabel)
-        mainScrollView.addSubview(architectureScrollView)
-
+        mainScrollView.addSubview(architectureCollectionView)
     }
     
     override func configureLayout() {
+        
         mainScrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         goldenHourLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainScrollView.snp.top).offset(16)
-            make.leading.equalTo(mainScrollView.snp.leading).offset(16)
+            make.top.leading.equalToSuperview().offset(16)
         }
         
-        goldenHourScrollView.snp.makeConstraints { make in
+        goldenHourCollectionView.snp.makeConstraints { make in
             make.top.equalTo(goldenHourLabel.snp.bottom).offset(16)
+            /*
+             TODO: make.horizontalEdges.equalToSuperview()를 사용하면 뷰가 나타나지 않고 make.width.equalToSuperview()를 사용해야 뷰가 나타난다.
+             */
+//            make.horizontalEdges.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(200)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
-        imageView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview()
-            make.width.equalTo(150)
         }
         
         businessLabel.snp.makeConstraints { make in
-            make.top.equalTo(goldenHourScrollView.snp.bottom).offset(16)
-            make.leading.equalTo(mainScrollView.snp.leading).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.top.equalTo(goldenHourCollectionView.snp.bottom).offset(16)
         }
         
-        businessScrollView.snp.makeConstraints { make in
+        businessCollectionView.snp.makeConstraints { make in
             make.top.equalTo(businessLabel.snp.bottom).offset(16)
+            make.width.equalToSuperview()
             make.height.equalTo(200)
-            make.horizontalEdges.equalToSuperview()
         }
         
         architectureLabel.snp.makeConstraints { make in
-            make.top.equalTo(businessScrollView.snp.bottom).offset(16)
-            make.leading.equalTo(mainScrollView.snp.leading).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.top.equalTo(businessCollectionView.snp.bottom).offset(16)
         }
         
-        architectureScrollView.snp.makeConstraints { make in
+        architectureCollectionView.snp.makeConstraints { make in
             make.top.equalTo(architectureLabel.snp.bottom).offset(16)
+            make.width.equalToSuperview()
             make.height.equalTo(200)
-            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+}
+
+extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func connectCollectionView() {
+        goldenHourCollectionView.tag = 1
+        goldenHourCollectionView.delegate = self
+        goldenHourCollectionView.dataSource = self
+        
+        businessCollectionView.tag = 2
+        businessCollectionView.delegate = self
+        businessCollectionView.dataSource = self
+        
+        architectureCollectionView.tag = 3
+        architectureCollectionView.delegate = self
+        architectureCollectionView.dataSource = self
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell {
+            return cell
+        } else {
+            return UICollectionViewCell()
         }
     }
 }
