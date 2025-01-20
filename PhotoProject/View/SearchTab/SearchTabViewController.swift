@@ -171,12 +171,18 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             return UICollectionViewCell()
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = PhotoDetailViewController()
-        vc.photoSearchData = photoSearchResult[indexPath.item]
-        networkManager.requestPhotoStatistics(params: PhotoStatisticsRequest(id: photoSearchResult[indexPath.item].id)) { result in
-            vc.photoStatisticsData = result
-            self.navigationController?.pushViewController(vc, animated: true)
+        switch collectionView.tag {
+        case 2:
+            let vc = PhotoDetailViewController()
+            vc.photoSearchData = photoSearchResult[indexPath.row]
+            networkManager.requestPhotoStatistics(params: PhotoStatisticsRequest(id: photoSearchResult[indexPath.item].id)) { result in
+                vc.photoStatisticsData = result
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        default:
+            break
         }
     }
 }
