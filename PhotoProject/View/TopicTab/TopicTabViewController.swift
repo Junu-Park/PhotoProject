@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 
 class TopicTabViewController: CustomBaseViewController {
@@ -52,9 +53,47 @@ class TopicTabViewController: CustomBaseViewController {
         return cv
     }()
     
+    let networkManager: NetworkManager = NetworkManager.shared
+    
+    var goldenHourTopicPhotoResponse: [TopicPhotoResponse]?
+    var businessTopicPhotoResponse: [TopicPhotoResponse]?
+    var architectureTopicPhotoResponse: [TopicPhotoResponse]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectCollectionView()
+        
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        DispatchQueue.global().async {
+            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "golden-hour")) { response in
+                self.goldenHourTopicPhotoResponse = response
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.enter()
+        DispatchQueue.global().async {
+            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "business-work")) { response in
+                self.businessTopicPhotoResponse = response
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.enter()
+        DispatchQueue.global().async {
+            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "architecture-interior")) { response in
+                self.architectureTopicPhotoResponse = response
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.goldenHourCollectionView.reloadData()
+            self.businessCollectionView.reloadData()
+            self.architectureCollectionView.reloadData()
+        }
     }
     
     override func configureNavigationItem() {
@@ -138,6 +177,24 @@ extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell {
+            let data: TopicPhotoResponse?
+            
+            switch collectionView.tag {
+            case 1:
+                data = goldenHourTopicPhotoResponse?[indexPath.item]
+            case 2:
+                data = businessTopicPhotoResponse?[indexPath.item]
+            case 3:
+                data = architectureTopicPhotoResponse?[indexPath.item]
+            default:
+                data = nil
+            }
+            
+            if let data {
+                cell.imageView.kf.setImage(with: URL(string: data.urls.small))
+                cell.likeButton.setTitle("\(data.likes)", for: .normal)
+            }
+            
             return cell
         } else {
             return UICollectionViewCell()

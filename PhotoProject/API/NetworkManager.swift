@@ -41,4 +41,19 @@ class NetworkManager {
             }
         }
     }
+    
+    func requestTopicPhoto(params: TopicPhotoRequest, completionHander: @escaping ([TopicPhotoResponse]) -> ()) {
+        
+        let header = HTTPHeader.init(name: "Authorization", value: "Client-ID \(APIKey.unsplashAccessKy.rawValue)")
+        
+        AF.request("\(APIURL.topicPhoto.rawValue)\(params.id)/photos?page=1", headers: [header]).responseDecodable(of: [TopicPhotoResponse].self) { response in
+            switch response.result {
+            case .success(let data):
+                print(data)
+                completionHander(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

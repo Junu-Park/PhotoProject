@@ -20,9 +20,10 @@ class TopicCollectionViewCell: UICollectionViewCell {
     
     let likeButton: UIButton = {
         let btn = UIButton(type: .custom)
+        btn.layer.cornerRadius = 10
         btn.backgroundColor = UIColor.darkGray
         btn.setTitleColor(.white, for: .normal)
-        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.setImage(UIImage(systemName: "star.fill"), for: .normal)
         btn.tintColor = .yellow
         return btn
     }()
