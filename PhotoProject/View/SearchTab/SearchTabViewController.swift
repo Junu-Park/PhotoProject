@@ -20,7 +20,7 @@ class SearchTabViewController: CustomBaseViewController {
     
     let networkManager: NetworkManager = NetworkManager.shared
 
-    var photoSearchRequest: PhotoSearchRequest = PhotoSearchRequest(query: "", page: 1, color: "")
+    var photoSearchRequest: PhotoSearchRequest = PhotoSearchRequest()
     
     var photoSearchResult: [PhotoSearchResult] = [] {
         willSet(oldVal) {
@@ -92,8 +92,10 @@ class SearchTabViewController: CustomBaseViewController {
         photoSearchRequest.order_by = sortButton.sortType.rawValue
         if let text = self.navigationItem.searchController!.searchBar.searchTextField.text, !text.isEmpty {
             self.photoCV.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-            networkManager.requestPhotoSearch(params: photoSearchRequest) { result in
-                self.photoSearchResult = result
+            
+            networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest)) { result in
+                self.photoSearchResult = result as! [PhotoSearchResult]
+            } failureHandler: {
             }
         }
     }
@@ -112,8 +114,9 @@ extension SearchTabViewController: UISearchTextFieldDelegate {
             if photoSearchResult.count > 0 {
                 self.photoCV.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
             }
-            networkManager.requestPhotoSearch(params: photoSearchRequest) { result in
-                self.photoSearchResult = result
+            networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest)) { result in
+                self.photoSearchResult = result as! [PhotoSearchResult]
+            } failureHandler: {
             }
             return true
         } else {
@@ -162,8 +165,9 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.likeCountButton.setTitle("\(photoSearchResult[indexPath.item].likes.formatted())", for: .normal)
             if (indexPath.item + 2) == photoSearchResult.count {
                 photoSearchRequest.page += 1
-                networkManager.requestPhotoSearch(params: photoSearchRequest) { result in
-                    self.photoSearchResult += result
+                networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest)) { result in
+                    self.photoSearchResult += result as! [PhotoSearchResult]
+                } failureHandler: {
                 }
             }
             return cell
@@ -177,9 +181,10 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
         case 2:
             let vc = PhotoDetailViewController()
             vc.photoSearchData = photoSearchResult[indexPath.row]
-            networkManager.requestPhotoStatistics(params: PhotoStatisticsRequest(id: photoSearchResult[indexPath.item].id)) { result in
-                vc.photoStatisticsData = result
+            networkManager.requestUnsplash(api: .getPhotoStatistics(id: photoSearchResult[indexPath.row].id)) { result in
+                vc.photoStatisticsData = result as? PhotoStatisticsResponse
                 self.navigationController?.pushViewController(vc, animated: true)
+            } failureHandler: {
             }
         default:
             break
