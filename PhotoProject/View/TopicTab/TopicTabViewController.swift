@@ -55,9 +55,9 @@ class TopicTabViewController: CustomBaseViewController {
     
     let networkManager: NetworkManager = NetworkManager.shared
     
-    var goldenHourTopicPhotoResponse: [TopicPhotoResponse]?
-    var businessTopicPhotoResponse: [TopicPhotoResponse]?
-    var architectureTopicPhotoResponse: [TopicPhotoResponse]?
+    var goldenHourTopicPhotoResponse: [PhotoSearchResult]?
+    var businessTopicPhotoResponse: [PhotoSearchResult]?
+    var architectureTopicPhotoResponse: [PhotoSearchResult]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,7 +181,7 @@ extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell {
-            let data: TopicPhotoResponse?
+            let data: PhotoSearchResult?
             
             switch collectionView.tag {
             case 1:
