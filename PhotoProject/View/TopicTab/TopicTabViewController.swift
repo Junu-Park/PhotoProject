@@ -204,4 +204,31 @@ extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewData
             return UICollectionViewCell()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PhotoDetailViewController()
+        
+        let data: PhotoSearchResult?
+        
+        switch collectionView.tag {
+        case 1:
+            data = goldenHourTopicPhotoResponse?[indexPath.item]
+            vc.photoSearchData = data
+        case 2:
+            data = businessTopicPhotoResponse?[indexPath.item]
+            vc.photoSearchData = data
+        case 3:
+            data = architectureTopicPhotoResponse?[indexPath.item]
+            vc.photoSearchData = data
+        default:
+            data = nil
+        }
+        
+        if let data {
+            networkManager.requestPhotoStatistics(params: PhotoStatisticsRequest(id: data.id)) { response in
+                vc.photoStatisticsData = response
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
 }
