@@ -63,37 +63,7 @@ class TopicTabViewController: CustomBaseViewController {
         super.viewDidLoad()
         connectCollectionView()
         
-        let dispatchGroup = DispatchGroup()
-        
-        dispatchGroup.enter()
-        DispatchQueue.global().async {
-            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "golden-hour")) { response in
-                self.goldenHourTopicPhotoResponse = response
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.enter()
-        DispatchQueue.global().async {
-            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "business-work")) { response in
-                self.businessTopicPhotoResponse = response
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.enter()
-        DispatchQueue.global().async {
-            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "architecture-interior")) { response in
-                self.architectureTopicPhotoResponse = response
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.goldenHourCollectionView.reloadData()
-            self.businessCollectionView.reloadData()
-            self.architectureCollectionView.reloadData()
-        }
+        requestTopicsPhotos()
     }
     
     override func configureNavigationItem() {
@@ -151,6 +121,40 @@ class TopicTabViewController: CustomBaseViewController {
             make.width.equalToSuperview()
             make.height.equalTo(200)
             make.bottom.equalToSuperview()
+        }
+    }
+    
+    func requestTopicsPhotos() {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        DispatchQueue.global().async {
+            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "golden-hour")) { response in
+                self.goldenHourTopicPhotoResponse = response
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.enter()
+        DispatchQueue.global().async {
+            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "business-work")) { response in
+                self.businessTopicPhotoResponse = response
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.enter()
+        DispatchQueue.global().async {
+            self.networkManager.requestTopicPhoto(params: TopicPhotoRequest(id: "architecture-interior")) { response in
+                self.architectureTopicPhotoResponse = response
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.goldenHourCollectionView.reloadData()
+            self.businessCollectionView.reloadData()
+            self.architectureCollectionView.reloadData()
         }
     }
 }
