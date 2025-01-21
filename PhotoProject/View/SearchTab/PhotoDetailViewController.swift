@@ -115,6 +115,13 @@ class PhotoDetailViewController: CustomBaseViewController {
         }
     }
     
+    override func configureNavigationItem() {
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
     override func configureHierarchy() {
         view.addSubview(profileImageView)
         view.addSubview(profileNameLabel)
