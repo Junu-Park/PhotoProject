@@ -14,45 +14,40 @@ class NetworkManager {
     
     private init() {}
     
-    func requestPhotoSearch(params: PhotoSearchRequest, completionHander: @escaping ([PhotoSearchResult]) -> ()) {
+    // TODO: successHandler의 리턴 값은 Any로 어찌저찌 처리가 되는데, Decode Type은 해결이 힘들다,,,
+    func requestUnsplash(api: UnsplashAPI, successHandler: @escaping (Any) -> (), failureHandler: @escaping () -> ()) {
+        let dataRequest = AF.request(api.endPointURLString, method: api.method, parameters: api.parameters, encoding: URLEncoding.queryString, headers: UnsplashAPI.headers)
         
-        let header = HTTPHeader.init(name: "Authorization", value: "Client-ID \(APIKey.unsplashAccessKy.rawValue)")
-        
-        AF.request("\(APIURL.photoSearch.rawValue)query=\(params.query)&per_page=\(params.per_page)&order_by=\(params.order_by)&page=\(params.page)", headers: [header]).responseDecodable(of: PhotoSearchResponse.self) { response in
-            switch response.result {
-            case .success(let data):
-                completionHander(data.results)
-            case .failure(let error):
-                print(error)
+        switch api {
+        case .searchPhotos:
+            dataRequest.responseDecodable(of: PhotoSearchResponse.self) { response in
+                switch response.result {
+                case .success(let data):
+                    successHandler(data.results)
+                case .failure(let error):
+                    print("searchPhotos fail, \(error)")
+                    failureHandler()
+                }
             }
-        }
-    }
-    
-    func requestPhotoStatistics(params: PhotoStatisticsRequest, completionHander: @escaping (PhotoStatisticsResponse) -> ()) {
-        
-        let header = HTTPHeader.init(name: "Authorization", value: "Client-ID \(APIKey.unsplashAccessKy.rawValue)")
-        
-        AF.request("\(APIURL.photoStatistics.rawValue)\(params.id)/statistics?", headers: [header]).responseDecodable(of: PhotoStatisticsResponse.self) { response in
-            switch response.result {
-            case .success(let data):
-                completionHander(data)
-            case .failure(let error):
-                print(error)
+        case .getPhotoStatistics:
+            dataRequest.responseDecodable(of: PhotoStatisticsResponse.self) { response in
+                switch response.result {
+                case .success(let data):
+                    successHandler(data)
+                case .failure(let error):
+                    print("getPhotoStatistics fail, \(error)")
+                    failureHandler()
+                }
             }
-        }
-    }
-    
-    func requestTopicPhoto(params: TopicPhotoRequest, completionHander: @escaping ([PhotoSearchResult]) -> ()) {
-        
-        let header = HTTPHeader.init(name: "Authorization", value: "Client-ID \(APIKey.unsplashAccessKy.rawValue)")
-        
-        AF.request("\(APIURL.topicPhoto.rawValue)\(params.id)/photos?page=1", headers: [header]).responseDecodable(of: [PhotoSearchResult].self) { response in
-            switch response.result {
-            case .success(let data):
-                print(data)
-                completionHander(data)
-            case .failure(let error):
-                print(error)
+        case .getTopicPhotos:
+            dataRequest.responseDecodable(of: [PhotoSearchResult].self) { response in
+                switch response.result {
+                case .success(let data):
+                    successHandler(data)
+                case .failure(let error):
+                    print("getTopicPhotos fail, \(error)")
+                    failureHandler()
+                }
             }
         }
     }
