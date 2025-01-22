@@ -7,6 +7,19 @@
 
 import UIKit
 
+enum ColorFilter: String {
+    case black_and_white = "black_and_white"
+    case black = "black"
+    case white = "white"
+    case yellow = "yellow"
+    case orange = "orange"
+    case red = "red"
+    case purple = "purple"
+    case magenta = "magenta"
+    case green = "green"
+    case blue = "blue"
+}
+
 final class ColorFilterCollectionView: UICollectionView {
 
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout = UICollectionViewFlowLayout()) {
