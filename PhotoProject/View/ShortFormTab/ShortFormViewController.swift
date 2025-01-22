@@ -28,8 +28,8 @@ class ShortFormViewController: CustomBaseViewController {
         connectCollectionView()
         shortFormCollectionView.contentInsetAdjustmentBehavior = .never
         
-        networkManager.requestUnsplash(api: .getRandomPhotos(params: randomPhotoRequest)) { response in
-            self.data = response as! [PhotoSearchResult]
+        networkManager.requestUnsplash(api: .getRandomPhotos(params: randomPhotoRequest)) { (response: [PhotoSearchResult]) in
+            self.data = response
             self.shortFormCollectionView.reloadData()
         } failureHandler: {
         }

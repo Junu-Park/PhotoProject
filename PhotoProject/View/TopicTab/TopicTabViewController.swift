@@ -129,8 +129,8 @@ class TopicTabViewController: CustomBaseViewController {
         
         dispatchGroup.enter()
         DispatchQueue.global().async {
-            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "golden-hour")) { response in
-                self.goldenHourTopicPhotoResponse = response as? [PhotoSearchResult]
+            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "golden-hour")) { (response: [PhotoSearchResult]) in
+                self.goldenHourTopicPhotoResponse = response
                 dispatchGroup.leave()
             } failureHandler: {
                 dispatchGroup.leave()
@@ -139,8 +139,8 @@ class TopicTabViewController: CustomBaseViewController {
         
         dispatchGroup.enter()
         DispatchQueue.global().async {
-            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "business-work")) { response in
-                self.businessTopicPhotoResponse = response as? [PhotoSearchResult]
+            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "business-work")) { (response: [PhotoSearchResult]) in
+                self.businessTopicPhotoResponse = response
                 dispatchGroup.leave()
             } failureHandler: {
                 dispatchGroup.leave()
@@ -149,8 +149,8 @@ class TopicTabViewController: CustomBaseViewController {
         
         dispatchGroup.enter()
         DispatchQueue.global().async {
-            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "architecture-interior")) { response in
-                self.architectureTopicPhotoResponse = response as? [PhotoSearchResult]
+            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "architecture-interior")) { (response: [PhotoSearchResult]) in
+                self.architectureTopicPhotoResponse = response
                 dispatchGroup.leave()
             } failureHandler: {
                 dispatchGroup.leave()
@@ -231,8 +231,8 @@ extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewData
         }
         
         if let data {
-            networkManager.requestUnsplash(api: .getPhotoStatistics(id: data.id)) { response in
-                vc.photoStatisticsData = response as? PhotoStatisticsResponse
+            networkManager.requestUnsplash(api: .getPhotoStatistics(id: data.id)) { (response: PhotoStatisticsResponse) in
+                vc.photoStatisticsData = response
                 self.navigationController?.pushViewController(vc, animated: true)
             } failureHandler: {
             }
