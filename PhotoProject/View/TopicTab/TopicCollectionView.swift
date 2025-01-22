@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopicCollectionView: UICollectionView {
+final class TopicCollectionView: UICollectionView {
 
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         let layout = UICollectionViewFlowLayout()

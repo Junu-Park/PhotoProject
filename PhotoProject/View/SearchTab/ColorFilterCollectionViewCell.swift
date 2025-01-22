@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ColorFilterCollectionViewCell: UICollectionViewCell {
+final class ColorFilterCollectionViewCell: UICollectionViewCell {
     
     static let id: String = "ColorFilterCollectionViewCell"
     

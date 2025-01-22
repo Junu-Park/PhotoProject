@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ColorFilterCollectionView: UICollectionView {
+final class ColorFilterCollectionView: UICollectionView {
 
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout = UICollectionViewFlowLayout()) {
         let layout = UICollectionViewFlowLayout()

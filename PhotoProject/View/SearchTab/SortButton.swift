@@ -12,7 +12,7 @@ enum SortEnum: String {
     case latest = "latest"
 }
 
-class SortButton: UIButton {
+final class SortButton: UIButton {
     
     var sortType: SortEnum = .relevant {
         willSet(newVal) {

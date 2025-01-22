@@ -11,7 +11,7 @@ import Alamofire
 import Kingfisher
 import SnapKit
 
-class PhotoDetailViewController: CustomBaseViewController {
+final class PhotoDetailViewController: CustomBaseViewController {
 
     let profileImageView: UIImageView = {
         let iv = UIImageView()

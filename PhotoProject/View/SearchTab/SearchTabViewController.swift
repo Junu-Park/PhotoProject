@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class SearchTabViewController: CustomBaseViewController {
+final class SearchTabViewController: CustomBaseViewController {
     
     lazy var colorFilterCV: ColorFilterCollectionView = ColorFilterCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
     

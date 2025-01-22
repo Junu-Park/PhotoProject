@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class ShortFormViewController: CustomBaseViewController {
+final class ShortFormViewController: CustomBaseViewController {
     
     let networkManager: NetworkManager = NetworkManager.shared
     

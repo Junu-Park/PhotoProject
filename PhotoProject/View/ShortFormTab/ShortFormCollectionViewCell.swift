@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ShortFormCollectionViewCell: UICollectionViewCell {
+final class ShortFormCollectionViewCell: UICollectionViewCell {
     
     static let id: String = "ShortFormCollectionViewCell"
     

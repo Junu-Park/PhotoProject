@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class TopicTabViewController: CustomBaseViewController {
+final class TopicTabViewController: CustomBaseViewController {
 
     let mainScrollView: UIScrollView = UIScrollView()
     

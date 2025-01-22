@@ -14,7 +14,6 @@ struct PhotoSearchRequest {
     var order_by: String = SortEnum.relevant.rawValue
     var color: String?
     
-    // TODO: color 쿼리 파라미터 넣기
     func toDictionary() -> [String: Any] {
         if let color = self.color {
             return [

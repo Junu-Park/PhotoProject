@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class PhotoCollectionView: UICollectionView {
+final class PhotoCollectionView: UICollectionView {
     
     let label: UILabel = {
         let lb: UILabel = UILabel()

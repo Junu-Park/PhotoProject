@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class TopicCollectionViewCell: UICollectionViewCell {
+final class TopicCollectionViewCell: UICollectionViewCell {
     static let id = "TopicCollectionViewCell"
     
     let imageView: UIImageView = {
