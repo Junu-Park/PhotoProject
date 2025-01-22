@@ -23,13 +23,18 @@ final class SearchTabViewController: CustomBaseViewController {
     var photoSearchRequest: PhotoSearchRequest = PhotoSearchRequest()
     
     var photoSearchResult: [PhotoSearchResult] = [] {
-        willSet(oldVal) {
-            if oldVal.count == 0 {
+        willSet(newVal) {
+            if newVal.count == 0 {
                 photoCV.label.text = "검색 결과가 없습니다."
             } else {
                 photoCV.label.text = ""
             }
             photoCV.reloadData()
+        }
+        didSet(oldVal) {
+            if oldVal.count == 0 || oldVal.count == photoSearchRequest.per_page {
+                self.photoCV.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     
@@ -109,9 +114,6 @@ extension SearchTabViewController: UISearchTextFieldDelegate {
         if let text = textField.text, !text.isEmpty {
             photoSearchRequest.page = 1
             photoSearchRequest.query =  text
-            if photoSearchResult.count > 0 {
-                self.photoCV.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-            }
             networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
                 self.photoSearchResult = response.results
             } failureHandler: {
