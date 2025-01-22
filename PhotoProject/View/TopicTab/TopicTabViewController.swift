@@ -92,12 +92,17 @@ final class TopicTabViewController: CustomBaseViewController {
         
         goldenHourCollectionView.snp.makeConstraints { make in
             make.top.equalTo(goldenHourLabel.snp.bottom).offset(16)
+            make.height.equalTo(200)
+            
             /*
-             TODO: make.horizontalEdges.equalToSuperview()를 사용하면 뷰가 나타나지 않고 make.width.equalToSuperview()를 사용해야 뷰가 나타난다.
+             TODO: -
+             make.width.equalToSuperview()는 단독으로 사용해도 뷰가 나타나지만,
+             make.horizontalEdges.equalToSuperview()는 단독으로 사용하면 뷰가 나타나지 않고
+             make.centerX.equalToSuperview()를 함께 사용해야 뷰가 나타난다
              */
 //            make.horizontalEdges.equalToSuperview()
+//            make.centerX.equalToSuperview()
             make.width.equalToSuperview()
-            make.height.equalTo(200)
         }
         
         businessLabel.snp.makeConstraints { make in
