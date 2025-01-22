@@ -53,3 +53,27 @@ enum UnsplashAPI {
         }
     }
 }
+
+enum UnsplashError: Int {
+    case badRequest = 400
+    case unAuthorized = 401
+    case forbidden = 403
+    case notFound = 404
+    case internalServerError1 = 500
+    case internalServerError2 = 503
+    
+    var description: String {
+        switch self {
+        case .badRequest:
+            return "The request was unacceptable,\noften due to missing a required parameter"
+        case .unAuthorized:
+            return "Invalid Access Token"
+        case .forbidden:
+            return "Missing permissions to perform request"
+        case .notFound:
+            return "The requested resource doesn’t exist"
+        case .internalServerError1, .internalServerError2:
+            return "Something went wrong on Unsplash end"
+        }
+    }
+}

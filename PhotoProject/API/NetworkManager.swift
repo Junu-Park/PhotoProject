@@ -14,14 +14,14 @@ final class NetworkManager {
     
     private init() {}
     
-    func requestUnsplash<T: Decodable>(api: UnsplashAPI, successHandler: @escaping (T) -> (), failureHandler: @escaping () -> ()) {
-        AF.request(api.endPointURLString, method: api.method, parameters: api.parameters, encoding: URLEncoding.queryString, headers: UnsplashAPI.headers).responseDecodable(of: T.self) { response in
+    func requestUnsplash<T: Decodable, U: UIViewController>(api: UnsplashAPI, view: U, successHandler: @escaping (T) -> (), failureHandler: @escaping () -> ()) {
+        AF.request(api.endPointURLString, method: api.method, parameters: api.parameters, encoding: URLEncoding.queryString, headers: UnsplashAPI.headers).validate(statusCode: 200...503).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let data):
                 successHandler(data)
-            case .failure(let error):
-                print("requestUnsplash fail, \(error)")
+            case .failure:
                 failureHandler()
+                view.presentAlert(errorCode: response.response?.statusCode)
             }
         }
     }
