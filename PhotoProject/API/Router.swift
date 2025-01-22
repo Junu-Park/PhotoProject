@@ -18,6 +18,7 @@ enum UnsplashAPI {
     case searchPhotos(params: PhotoSearchRequest)
     case getPhotoStatistics(id: String)
     case getTopicPhotos(id: String)
+    case getRandomPhotos(params: RandomPhotoRequest)
     
     var endPointURLString: String {
         switch self {
@@ -27,12 +28,14 @@ enum UnsplashAPI {
             return UnsplashAPI.baseURLString + "photos/\(id)/statistics/"
         case .getTopicPhotos(let id):
             return UnsplashAPI.baseURLString + "topics/\(id)/photos/"
+        case .getRandomPhotos:
+            return UnsplashAPI.baseURLString + "photos/random/"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .searchPhotos, .getPhotoStatistics, .getTopicPhotos:
+        case .searchPhotos, .getPhotoStatistics, .getTopicPhotos, .getRandomPhotos:
             return .get
         }
     }
@@ -45,6 +48,8 @@ enum UnsplashAPI {
             return nil
         case .getTopicPhotos:
             return nil
+        case .getRandomPhotos(let params):
+            return params.toDictionary()
         }
     }
 }

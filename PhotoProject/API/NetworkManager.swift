@@ -49,6 +49,16 @@ class NetworkManager {
                     failureHandler()
                 }
             }
+        case .getRandomPhotos:
+            dataRequest.responseDecodable(of: [PhotoSearchResult].self) { response in
+                switch response.result {
+                case .success(let data):
+                    successHandler(data)
+                case .failure(let error):
+                    print("getRandomPhotos fail, \(error)")
+                    failureHandler()
+                }
+            }
         }
     }
 }

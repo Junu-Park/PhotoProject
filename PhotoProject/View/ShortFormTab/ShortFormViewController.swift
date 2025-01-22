@@ -7,23 +7,59 @@
 
 import UIKit
 
-class ShortFormViewController: UIViewController {
+import Kingfisher
+import SnapKit
 
+class ShortFormViewController: CustomBaseViewController {
+    
+    let networkManager: NetworkManager = NetworkManager.shared
+    
+    lazy var shortFormCollectionView: ShortFormCollectionView = {
+        let cv = ShortFormCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: UIScreen.main.bounds.height), collectionViewLayout: UICollectionViewLayout())
+        return cv
+    }()
+    
+    var data: [PhotoSearchResult] = []
+    
+    var randomPhotoRequest: RandomPhotoRequest = RandomPhotoRequest(count: 10)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        connectCollectionView()
+        shortFormCollectionView.contentInsetAdjustmentBehavior = .never
+        
+        networkManager.requestUnsplash(api: .getRandomPhotos(params: randomPhotoRequest)) { response in
+            self.data = response as! [PhotoSearchResult]
+            self.shortFormCollectionView.reloadData()
+        } failureHandler: {
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func configureHierarchy() {
+        self.view.addSubview(shortFormCollectionView)
     }
-    */
+    
+    override func configureLayout() {
+        shortFormCollectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+}
 
+extension ShortFormViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func connectCollectionView() {
+        shortFormCollectionView.delegate = self
+        shortFormCollectionView.dataSource = self
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShortFormCollectionViewCell.id, for: indexPath) as! ShortFormCollectionViewCell
+        cell.imageView.kf.setImage(with: URL(string: data[indexPath.item].urls.small))
+        return cell
+    }
 }
