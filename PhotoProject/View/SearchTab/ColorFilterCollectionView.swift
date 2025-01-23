@@ -52,6 +52,7 @@ final class ColorFilterCollectionView: UICollectionView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
+        layout.sectionInset = .init(top: 0, left: 0, bottom: 0, right: 88)
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(width: 100, height: 40)
         super.init(frame: frame, collectionViewLayout: layout)
