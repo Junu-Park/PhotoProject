@@ -66,6 +66,8 @@ final class TopicTabViewController: CustomBaseViewController {
     
     override func configureNavigationItem() {
         self.navigationItem.title = "OUR TOPIC"
+        let rightItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(navigationRightButtonTapped))
+        self.navigationItem.rightBarButtonItem = rightItem
     }
     
     override func configureHierarchy() {
@@ -139,6 +141,10 @@ final class TopicTabViewController: CustomBaseViewController {
         architectureCollectionView.tag = 3
         architectureCollectionView.delegate = self
         architectureCollectionView.dataSource = self
+    }
+    
+    @objc private func navigationRightButtonTapped() {
+        print(#function)
     }
     
     private func requestTopicsPhotos() {
