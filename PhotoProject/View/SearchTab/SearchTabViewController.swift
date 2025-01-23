@@ -43,7 +43,6 @@ final class SearchTabViewController: CustomBaseViewController {
         
         sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         connectSearchTextField()
-        connectCollectionView()
     }
     
     override func configureNavigationItem() {
@@ -84,6 +83,15 @@ final class SearchTabViewController: CustomBaseViewController {
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    override func connectCollectionView() {
+        colorFilterCV.tag = 1
+        colorFilterCV.delegate = self
+        colorFilterCV.dataSource = self
+        photoCV.tag = 2
+        photoCV.delegate = self
+        photoCV.dataSource = self
     }
     
     @objc func sortButtonTapped() {
@@ -130,15 +138,6 @@ extension SearchTabViewController: UISearchTextFieldDelegate {
 }
 
 extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func connectCollectionView() {
-        colorFilterCV.tag = 1
-        colorFilterCV.delegate = self
-        colorFilterCV.dataSource = self
-        photoCV.tag = 2
-        photoCV.delegate = self
-        photoCV.dataSource = self
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {

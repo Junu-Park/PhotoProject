@@ -61,8 +61,6 @@ final class TopicTabViewController: CustomBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectCollectionView()
-        
         requestTopicsPhotos()
     }
     
@@ -129,7 +127,21 @@ final class TopicTabViewController: CustomBaseViewController {
         }
     }
     
-    func requestTopicsPhotos() {
+    override func connectCollectionView() {
+        goldenHourCollectionView.tag = 1
+        goldenHourCollectionView.delegate = self
+        goldenHourCollectionView.dataSource = self
+        
+        businessCollectionView.tag = 2
+        businessCollectionView.delegate = self
+        businessCollectionView.dataSource = self
+        
+        architectureCollectionView.tag = 3
+        architectureCollectionView.delegate = self
+        architectureCollectionView.dataSource = self
+    }
+    
+    private func requestTopicsPhotos() {
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
@@ -171,20 +183,6 @@ final class TopicTabViewController: CustomBaseViewController {
 }
 
 extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func connectCollectionView() {
-        goldenHourCollectionView.tag = 1
-        goldenHourCollectionView.delegate = self
-        goldenHourCollectionView.dataSource = self
-        
-        businessCollectionView.tag = 2
-        businessCollectionView.delegate = self
-        businessCollectionView.dataSource = self
-        
-        architectureCollectionView.tag = 3
-        architectureCollectionView.delegate = self
-        architectureCollectionView.dataSource = self
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10

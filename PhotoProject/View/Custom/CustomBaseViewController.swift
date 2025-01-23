@@ -11,6 +11,7 @@ protocol ViewControllerProtocol {
     func configureNavigationItem()
     func configureHierarchy()
     func configureLayout()
+    func connectCollectionView()
 }
 
 class CustomBaseViewController: UIViewController, ViewControllerProtocol {
@@ -20,6 +21,7 @@ class CustomBaseViewController: UIViewController, ViewControllerProtocol {
         configureNavigationItem()
         configureHierarchy()
         configureLayout()
+        connectCollectionView()
     }
     
     func configureNavigationItem() {
@@ -31,6 +33,10 @@ class CustomBaseViewController: UIViewController, ViewControllerProtocol {
     }
     
     func configureLayout() {
+        
+    }
+    
+    func connectCollectionView(){
         
     }
 }

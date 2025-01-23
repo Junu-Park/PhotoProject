@@ -44,14 +44,14 @@ final class ShortFormViewController: CustomBaseViewController {
             make.edges.equalToSuperview()
         }
     }
-}
-
-extension ShortFormViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func connectCollectionView() {
+    override func connectCollectionView() {
         shortFormCollectionView.delegate = self
         shortFormCollectionView.dataSource = self
     }
+}
+
+extension ShortFormViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
