@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ColorFilter: String {
+enum ColorFilter: String, CaseIterable {
     case black_and_white = "black_and_white"
     case black = "black"
     case white = "white"

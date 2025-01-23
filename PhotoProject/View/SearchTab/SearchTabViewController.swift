@@ -175,8 +175,18 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
+    // TODO: Cell Button 말고 Label로 바꾸기,,,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView.tag {
+        case 1:
+            let cell = collectionView.cellForItem(at: indexPath) as! ColorFilterCollectionViewCell
+            self.photoSearchRequest.color = cell.button.title(for: .normal)
+            if self.photoSearchRequest.query != "" {
+                networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
+                    self.photoSearchResult = response.results
+                } failureHandler: {
+                }
+            }
         case 2:
             let vc = PhotoDetailViewController()
             vc.photoSearchData = photoSearchResult[indexPath.row]
