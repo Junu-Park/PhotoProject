@@ -14,14 +14,14 @@ final class ShortFormViewController: CustomBaseViewController {
     
     let networkManager: NetworkManager = NetworkManager.shared
     
-    lazy var shortFormCollectionView: ShortFormCollectionView = {
+    private lazy var shortFormCollectionView: ShortFormCollectionView = {
         let cv = ShortFormCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: UIScreen.main.bounds.height), collectionViewLayout: UICollectionViewLayout())
         return cv
     }()
     
-    var data: [PhotoSearchResult] = []
+    private var data: [PhotoSearchResult] = []
     
-    var randomPhotoRequest: RandomPhotoRequest = RandomPhotoRequest(count: 10)
+    private var randomPhotoRequest: RandomPhotoRequest = RandomPhotoRequest(count: 10)
     
     override func viewDidLoad() {
         super.viewDidLoad()

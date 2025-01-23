@@ -12,17 +12,17 @@ import SnapKit
 
 final class SearchTabViewController: CustomBaseViewController {
     
-    lazy var colorFilterCV: ColorFilterCollectionView = ColorFilterCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+    private lazy var colorFilterCV: ColorFilterCollectionView = ColorFilterCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
     
-    let sortButton: SortButton = SortButton()
+    private let sortButton: SortButton = SortButton()
     
-    lazy var photoCV: PhotoCollectionView = PhotoCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height / 1.5))
+    private lazy var photoCV: PhotoCollectionView = PhotoCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height / 1.5))
     
     let networkManager: NetworkManager = NetworkManager.shared
 
-    var photoSearchRequest: PhotoSearchRequest = PhotoSearchRequest()
+    private var photoSearchRequest: PhotoSearchRequest = PhotoSearchRequest()
     
-    var photoSearchResult: [PhotoSearchResult] = [] {
+    private var photoSearchResult: [PhotoSearchResult] = [] {
         willSet(newVal) {
             if newVal.count == 0 {
                 photoCV.label.text = "검색 결과가 없습니다."

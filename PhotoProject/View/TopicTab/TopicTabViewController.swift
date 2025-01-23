@@ -12,9 +12,9 @@ import SnapKit
 
 final class TopicTabViewController: CustomBaseViewController {
 
-    let mainScrollView: UIScrollView = UIScrollView()
+    private let mainScrollView: UIScrollView = UIScrollView()
     
-    let goldenHourLabel: UILabel = {
+    private let goldenHourLabel: UILabel = {
         let lb: UILabel = UILabel()
         lb.textColor = UIColor.black
         lb.font = .boldSystemFont(ofSize: 17)
@@ -22,12 +22,12 @@ final class TopicTabViewController: CustomBaseViewController {
         return lb
     }()
     
-    lazy var goldenHourCollectionView: TopicCollectionView = {
+    private lazy var goldenHourCollectionView: TopicCollectionView = {
         let cv = TopicCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200))
         return cv
     }()
     
-    let businessLabel: UILabel = {
+    private let businessLabel: UILabel = {
         let lb: UILabel = UILabel()
         lb.textColor = UIColor.black
         lb.font = .boldSystemFont(ofSize: 17)
@@ -35,12 +35,12 @@ final class TopicTabViewController: CustomBaseViewController {
         return lb
     }()
     
-    lazy var businessCollectionView: TopicCollectionView = {
+    private lazy var businessCollectionView: TopicCollectionView = {
         let cv = TopicCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200))
         return cv
     }()
     
-    let architectureLabel: UILabel = {
+    private let architectureLabel: UILabel = {
         let lb: UILabel = UILabel()
         lb.textColor = UIColor.black
         lb.font = .boldSystemFont(ofSize: 17)
@@ -48,16 +48,16 @@ final class TopicTabViewController: CustomBaseViewController {
         return lb
     }()
     
-    lazy var architectureCollectionView: TopicCollectionView = {
+    private lazy var architectureCollectionView: TopicCollectionView = {
         let cv = TopicCollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 200))
         return cv
     }()
     
-    let networkManager: NetworkManager = NetworkManager.shared
+    private let networkManager: NetworkManager = NetworkManager.shared
     
-    var goldenHourTopicPhotoResponse: [PhotoSearchResult]?
-    var businessTopicPhotoResponse: [PhotoSearchResult]?
-    var architectureTopicPhotoResponse: [PhotoSearchResult]?
+    private var goldenHourTopicPhotoResponse: [PhotoSearchResult]?
+    private var businessTopicPhotoResponse: [PhotoSearchResult]?
+    private var architectureTopicPhotoResponse: [PhotoSearchResult]?
     
     override func viewDidLoad() {
         super.viewDidLoad()

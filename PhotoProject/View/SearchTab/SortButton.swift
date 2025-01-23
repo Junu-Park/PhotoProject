@@ -38,7 +38,7 @@ final class SortButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setTitleWithSortType(_ SortType: SortEnum){
+    private func setTitleWithSortType(_ SortType: SortEnum){
         switch SortType {
         case .relevant:
             self.setTitle("관련순", for: .normal)

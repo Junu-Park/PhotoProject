@@ -13,7 +13,7 @@ import SnapKit
 
 final class PhotoDetailViewController: CustomBaseViewController {
 
-    let profileImageView: UIImageView = {
+    private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
         iv.layer.cornerRadius = 30
@@ -22,21 +22,21 @@ final class PhotoDetailViewController: CustomBaseViewController {
         return iv
     }()
     
-    let profileNameLabel: UILabel = {
+    private let profileNameLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor.black
         lb.font = UIFont.systemFont(ofSize: 12)
         return lb
     }()
     
-    let imageDateLabel: UILabel = {
+    private let imageDateLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor.black
         lb.font = UIFont.boldSystemFont(ofSize: 12)
         return lb
     }()
     
-    let likeButton: UIButton = {
+    private let likeButton: UIButton = {
         let btn = UIButton()
         btn.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         btn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -44,14 +44,14 @@ final class PhotoDetailViewController: CustomBaseViewController {
         return btn
     }()
     
-    let photoImageView: UIImageView = {
+    private let photoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleToFill
         
         return iv
     }()
     
-    let infoLabel: UILabel = {
+    private let infoLabel: UILabel = {
         let lb = UILabel()
         lb.text = "정보"
         lb.textColor = UIColor.black
@@ -59,7 +59,7 @@ final class PhotoDetailViewController: CustomBaseViewController {
         return lb
     }()
     
-    let infoTitleLabelStackView: UIStackView = {
+    private let infoTitleLabelStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         let sizeLB = UILabel()
@@ -78,7 +78,7 @@ final class PhotoDetailViewController: CustomBaseViewController {
         return sv
     }()
     
-    lazy var infoDataLabelStackView: UIStackView = {
+    private lazy var infoDataLabelStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         let sizeLB = UILabel()

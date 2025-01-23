@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LikeTapViewController: UIViewController {
+final class LikeTapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
