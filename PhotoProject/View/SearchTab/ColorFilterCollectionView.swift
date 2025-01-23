@@ -18,6 +18,32 @@ enum ColorFilter: String {
     case magenta = "magenta"
     case green = "green"
     case blue = "blue"
+    
+    // TODO: UIColor는 systemColor를 String으로 접근하는 방법 없을까...?
+    var uiColor: UIColor {
+        switch self {
+        case .black_and_white:
+            return .black.withAlphaComponent(0.5)
+        case .black:
+            return .black
+        case .white:
+            return .white
+        case .yellow:
+            return .yellow
+        case .orange:
+            return .orange
+        case .red:
+            return .red
+        case .purple:
+            return .purple
+        case .magenta:
+            return .magenta
+        case .green:
+            return .green
+        case .blue:
+            return .blue
+        }
+    }
 }
 
 final class ColorFilterCollectionView: UICollectionView {

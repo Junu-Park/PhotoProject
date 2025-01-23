@@ -155,8 +155,8 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
         switch collectionView.tag {
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorFilterCollectionViewCell.id, for: indexPath) as! ColorFilterCollectionViewCell
-            cell.button.tintColor = .red
-            cell.button.setTitle("색깔색깔", for: .normal)
+            cell.button.tintColor = ColorFilter.allCases[indexPath.item].uiColor
+            cell.button.setTitle(ColorFilter.allCases[indexPath.item].rawValue, for: .normal)
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.id, for: indexPath) as! PhotoCollectionViewCell
