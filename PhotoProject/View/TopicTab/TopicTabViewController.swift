@@ -152,7 +152,7 @@ final class TopicTabViewController: CustomBaseViewController {
         
         dispatchGroup.enter()
         DispatchQueue.global().async {
-            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "golden-hour"), view: self) { (response: [PhotoSearchResult]) in
+            self.networkManager.requestUnsplashWithAlert(api: .getTopicPhotos(id: "golden-hour"), view: self) { (response: [PhotoSearchResult]) in
                 self.goldenHourTopicPhotoResponse = response
                 dispatchGroup.leave()
             } failureHandler: {
@@ -162,7 +162,7 @@ final class TopicTabViewController: CustomBaseViewController {
         
         dispatchGroup.enter()
         DispatchQueue.global().async {
-            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "business-work"), view: self) { (response: [PhotoSearchResult]) in
+            self.networkManager.requestUnsplashWithAlert(api: .getTopicPhotos(id: "business-work"), view: self) { (response: [PhotoSearchResult]) in
                 self.businessTopicPhotoResponse = response
                 dispatchGroup.leave()
             } failureHandler: {
@@ -172,7 +172,7 @@ final class TopicTabViewController: CustomBaseViewController {
         
         dispatchGroup.enter()
         DispatchQueue.global().async {
-            self.networkManager.requestUnsplash(api: .getTopicPhotos(id: "architecture-interior"), view: self) { (response: [PhotoSearchResult]) in
+            self.networkManager.requestUnsplashWithAlert(api: .getTopicPhotos(id: "architecture-interior"), view: self) { (response: [PhotoSearchResult]) in
                 self.architectureTopicPhotoResponse = response
                 dispatchGroup.leave()
             } failureHandler: {
@@ -240,7 +240,7 @@ extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewData
         }
         
         if let data {
-            networkManager.requestUnsplash(api: .getPhotoStatistics(id: data.id), view: self) { (response: PhotoStatisticsResponse) in
+            networkManager.requestUnsplashWithAlert(api: .getPhotoStatistics(id: data.id), view: self) { (response: PhotoStatisticsResponse) in
                 vc.photoStatisticsData = response
                 self.navigationController?.pushViewController(vc, animated: true)
             } failureHandler: {

@@ -104,7 +104,7 @@ final class SearchTabViewController: CustomBaseViewController {
         photoSearchRequest.page = 1
         photoSearchRequest.order_by = sortButton.sortType.rawValue
         if let text = self.navigationItem.searchController!.searchBar.searchTextField.text, !text.isEmpty {
-            networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
+            networkManager.requestUnsplashWithAlert(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
                 self.photoSearchResult = response.results
             } failureHandler: {
             }
@@ -122,7 +122,7 @@ extension SearchTabViewController: UISearchTextFieldDelegate {
         if let text = textField.text, !text.isEmpty {
             photoSearchRequest.page = 1
             photoSearchRequest.query =  text
-            networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
+            networkManager.requestUnsplashWithAlert(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
                 self.photoSearchResult = response.results
             } failureHandler: {
             }
@@ -165,7 +165,7 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.likeCountButton.setTitle("\(photoSearchResult[indexPath.item].likes.formatted())", for: .normal)
             if (indexPath.item + 2) == photoSearchResult.count {
                 photoSearchRequest.page += 1
-                networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
+                networkManager.requestUnsplashWithAlert(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
                     self.photoSearchResult += response.results
                 } failureHandler: {
                 }
@@ -183,7 +183,7 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             let cell = collectionView.cellForItem(at: indexPath) as! ColorFilterCollectionViewCell
             self.photoSearchRequest.color = cell.button.title(for: .normal)
             if self.photoSearchRequest.query != "" {
-                networkManager.requestUnsplash(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
+                networkManager.requestUnsplashWithAlert(api: .searchPhotos(params: photoSearchRequest), view: self) { (response: PhotoSearchResponse) in
                     self.photoSearchResult = response.results
                 } failureHandler: {
                 }
@@ -191,7 +191,7 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
         case 2:
             let vc = PhotoDetailViewController()
             vc.photoSearchData = photoSearchResult[indexPath.row]
-            networkManager.requestUnsplash(api: .getPhotoStatistics(id: photoSearchResult[indexPath.row].id), view: self) { (response: PhotoStatisticsResponse) in
+            networkManager.requestUnsplashWithAlert(api: .getPhotoStatistics(id: photoSearchResult[indexPath.row].id), view: self) { (response: PhotoStatisticsResponse) in
                 vc.photoStatisticsData = response
                 self.navigationController?.pushViewController(vc, animated: true)
             } failureHandler: {
