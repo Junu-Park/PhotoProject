@@ -228,22 +228,22 @@ extension TopicTabViewController: UICollectionViewDelegate, UICollectionViewData
         switch collectionView.tag {
         case 1:
             data = goldenHourTopicPhotoResponse?[indexPath.item]
-            vc.photoSearchData = data
         case 2:
             data = businessTopicPhotoResponse?[indexPath.item]
-            vc.photoSearchData = data
         case 3:
             data = architectureTopicPhotoResponse?[indexPath.item]
-            vc.photoSearchData = data
         default:
             data = nil
         }
         
         if let data {
-            networkManager.requestUnsplashWithAlert(api: .getPhotoStatistics(id: data.id), view: self) { (response: PhotoStatisticsResponse) in
-                vc.photoStatisticsData = response
-                self.navigationController?.pushViewController(vc, animated: true)
-            } failureHandler: {
+            vc.viewModel.input.photoSearchData.value = data
+            vc.viewModel.output.photoStatisticsData.lazyBind { [weak self] response in
+                guard let response else {
+                    // TODO: 에러처리
+                    return
+                }
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }

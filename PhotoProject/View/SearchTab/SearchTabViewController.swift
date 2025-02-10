@@ -190,11 +190,13 @@ extension SearchTabViewController: UICollectionViewDelegate, UICollectionViewDat
             }
         case 2:
             let vc = PhotoDetailViewController()
-            vc.photoSearchData = photoSearchResult[indexPath.row]
-            networkManager.requestUnsplashWithAlert(api: .getPhotoStatistics(id: photoSearchResult[indexPath.row].id), view: self) { (response: PhotoStatisticsResponse) in
-                vc.photoStatisticsData = response
-                self.navigationController?.pushViewController(vc, animated: true)
-            } failureHandler: {
+            vc.viewModel.input.photoSearchData.value = photoSearchResult[indexPath.row]
+            vc.viewModel.output.photoStatisticsData.lazyBind { [weak self] response in
+                guard let response else {
+                    // TODO: 에러처리
+                    return
+                }
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
         default:
             break

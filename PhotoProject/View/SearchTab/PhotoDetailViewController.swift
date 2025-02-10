@@ -84,35 +84,31 @@ final class PhotoDetailViewController: CustomBaseViewController {
         let sizeLB = UILabel()
         sizeLB.textAlignment = .right
         sizeLB.font = UIFont.boldSystemFont(ofSize: 13)
-        sizeLB.text = "\(photoSearchData?.width ?? 0) x \(photoSearchData?.height ?? 0)"
+        sizeLB.text = "\(viewModel.output.photoSearchData.value.width) x \(viewModel.output.photoSearchData.value.height)"
         sv.addArrangedSubview(sizeLB)
         let viewLB = UILabel()
         viewLB.textAlignment = .right
         viewLB.font = UIFont.boldSystemFont(ofSize: 13)
-        viewLB.text = "\(photoStatisticsData?.views.total.formatted() ?? "0")"
+        viewLB.text = "\(viewModel.output.photoStatisticsData.value?.views.total.formatted() ?? "0")"
         sv.addArrangedSubview(viewLB)
         let downloadLB = UILabel()
         downloadLB.textAlignment = .right
         downloadLB.font = UIFont.boldSystemFont(ofSize: 13)
-        downloadLB.text = "\(photoStatisticsData?.downloads.total.formatted() ?? "0")"
+        downloadLB.text = "\(viewModel.output.photoStatisticsData.value?.downloads.total.formatted() ?? "0")"
         sv.addArrangedSubview(downloadLB)
         sv.spacing = 16
         return sv
     }()
     
-    var photoSearchData: PhotoSearchResult?
-    
-    var photoStatisticsData: PhotoStatisticsResponse?
+    let viewModel: PhotoDetailViewModel = PhotoDetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        if let photoSearchData {
-            profileImageView.kf.setImage(with: URL(string: photoSearchData.user.profile_image.medium))
-            profileNameLabel.text = photoSearchData.user.name
-            imageDateLabel.text = photoSearchData.created_at.convertDateString()
-            photoImageView.kf.setImage(with: URL(string: photoSearchData.urls.small))
-        }
+        profileImageView.kf.setImage(with: URL(string: self.viewModel.output.photoSearchData.value.user.profile_image.medium))
+        profileNameLabel.text = self.viewModel.output.photoSearchData.value.user.name
+        imageDateLabel.text = self.viewModel.output.photoSearchData.value.created_at.convertDateString()
+        photoImageView.kf.setImage(with: URL(string: self.viewModel.output.photoSearchData.value.urls.small))
     }
     
     override func configureNavigationItem() {
